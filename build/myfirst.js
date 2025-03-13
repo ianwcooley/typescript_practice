@@ -135,12 +135,68 @@ const car2 = {
     type: carType,
     model: carModel
 };
-const rectangle = {
-    height: 20,
-    width: 10
+// interface Rectangle {
+//     height: number,
+//     width: number
+//   }
+//   const rectangle: Rectangle = {
+//     height: 20,
+//     width: 10
+//   };
+//   interface ColoredRectangle extends Rectangle {
+//     color: string
+//   }
+//   const coloredRectangle: ColoredRectangle = {
+//     height: 20,
+//     width: 10,
+//     color: "red"
+//   };
+// the `: number` here specifies that this function returns a number
+function getTime() {
+    return new Date().getTime();
+}
+function printHello() {
+    console.log('Hello!');
+}
+function divide({ dividend, divisor }) {
+    return dividend / divisor;
+}
+console.log(divide({ dividend: 10, divisor: 2 }));
+class Rectangle {
+    constructor(width, height) {
+        this.width = width;
+        this.height = height;
+    }
+    getArea() {
+        return this.width * this.height;
+    }
+}
+let rect = new Rectangle(5, 5);
+console.log(rect.getArea());
+class NamedValue {
+    constructor(name) {
+        this.name = name;
+    }
+    setValue(value) {
+        this._value = value;
+    }
+    getValue() {
+        return this._value;
+    }
+    toString() {
+        return `${this.name}: ${this._value}`;
+    }
+}
+let value = new NamedValue('myNumber');
+value.setValue(10);
+console.log(value.toString()); // myNumber: 10
+let val = true; // a string cannot be used here since Exclude removed it from the type.
+// `keyof Person` here creates a union type of "name" and "age", other strings will not be allowed
+function printPersonProperty(person, property) {
+    console.log(`Printing person property ${property}: "${person[property]}"`);
+}
+let person = {
+    name: "Max",
+    age: 27
 };
-const coloredRectangle = {
-    height: 20,
-    width: 10,
-    color: "red"
-};
+printPersonProperty(person, "name"); // Printing person property name: "Max"

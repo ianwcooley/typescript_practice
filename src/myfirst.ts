@@ -164,22 +164,106 @@ const car2: Car = {
   model: carModel
 };
 
-interface Rectangle {
-    height: number,
-    width: number
-  }
+// interface Rectangle {
+//     height: number,
+//     width: number
+//   }
   
-  const rectangle: Rectangle = {
-    height: 20,
-    width: 10
-  };
+//   const rectangle: Rectangle = {
+//     height: 20,
+//     width: 10
+//   };
 
-  interface ColoredRectangle extends Rectangle {
-    color: string
+//   interface ColoredRectangle extends Rectangle {
+//     color: string
+//   }
+  
+//   const coloredRectangle: ColoredRectangle = {
+//     height: 20,
+//     width: 10,
+//     color: "red"
+//   };
+
+  // the `: number` here specifies that this function returns a number
+function getTime(): number {
+    return new Date().getTime();
+  }
+
+  function printHello(): void {
+    console.log('Hello!');
+  }
+
+  function divide({ dividend, divisor }: { dividend: number, divisor: number }) {
+    return dividend / divisor;
+  }
+
+  console.log(divide({dividend: 10, divisor: 2}));
+
+//   class Person {
+//     private name: string;
+  
+//     public constructor(name: string) {
+//       this.name = name;
+//     }
+  
+//     public getName(): string {
+//       return this.name;
+//     }
+//   }
+  
+//   const person = new Person("Jane");
+//   console.log(person.getName()); // person.name isn't accessible from outside the class since it's private
+
+  interface Shape {
+    getArea: () => number;
   }
   
-  const coloredRectangle: ColoredRectangle = {
-    height: 20,
-    width: 10,
-    color: "red"
+  class Rectangle implements Shape {
+    public constructor(protected readonly width: number, protected readonly height: number) {}
+  
+    public getArea(): number {
+      return this.width * this.height;
+    }
+  }
+
+  let rect = new Rectangle(5, 5);
+  console.log(rect.getArea());
+
+  class NamedValue<T> {
+    private _value: T | undefined;
+  
+    constructor(private name: string) {}
+  
+    public setValue(value: T) {
+      this._value = value;
+    }
+  
+    public getValue(): T | undefined {
+      return this._value;
+    }
+  
+    public toString(): string {
+      return `${this.name}: ${this._value}`;
+    }
+  }
+  
+  let value = new NamedValue<number>('myNumber');
+  value.setValue(10);
+  console.log(value.toString()); // myNumber: 10
+
+  type Primitive = string | number | boolean
+let val: Exclude<Primitive, string> = true; // a string cannot be used here since Exclude removed it from the type.
+
+interface Person {
+    name: string;
+    age: number;
+  }
+  // `keyof Person` here creates a union type of "name" and "age", other strings will not be allowed
+  function printPersonProperty(person: Person, property: keyof Person) {
+    console.log(`Printing person property ${property}: "${person[property]}"`);
+  }
+  let person = {
+    name: "Max",
+    age: 27
   };
+  printPersonProperty(person, "name"); // Printing person property name: "Max"
